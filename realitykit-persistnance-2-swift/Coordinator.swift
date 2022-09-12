@@ -32,11 +32,17 @@ class Coordinator: NSObject, ARSessionDelegate {
             let arAnchor = ARAnchor(name: "boxAnchor", transform: result.worldTransform)
             
             let anchor = AnchorEntity(anchor: arAnchor)
-            let box = ModelEntity(mesh: MeshResource.generateBox(size: 0.3), materials: [SimpleMaterial(color: .green, isMetallic: true)])
+            let box = ModelEntity(mesh: MeshResource.generateBox(size: 0.1), materials: [SimpleMaterial(color: .green, isMetallic: true)])
+            
+            //this allows us to interact with entity
+            box.generateCollisionShapes(recursive: true)
             
             arView.session.add(anchor: arAnchor)
             anchor.addChild(box)
             arView.scene.addAnchor(anchor)
+            
+            //install basic translation, rotation, and scale gestures to our model
+            arView.installGestures(for: box)
         }
     }
     
@@ -76,9 +82,17 @@ class Coordinator: NSObject, ARSessionDelegate {
             
             for anchor in worldMap.anchors {
                 let anchorEntity = AnchorEntity(anchor: anchor)
-                let box = ModelEntity(mesh: MeshResource.generateBox(size: 0.3), materials: [SimpleMaterial(color: .green, isMetallic: true)])
+                let box = ModelEntity(mesh: MeshResource.generateBox(size: 0.1), materials: [SimpleMaterial(color: .green, isMetallic: true)])
+                
+                //this allows us to interact with entity
+                box.generateCollisionShapes(recursive: true)
+                
                 anchorEntity.addChild(box)
                 arView.scene.addAnchor(anchorEntity)
+                
+                //install basic translation, rotation, and scale gestures to our model
+                arView.installGestures(for: box)
+                
             }
             
             
@@ -87,6 +101,7 @@ class Coordinator: NSObject, ARSessionDelegate {
             configuration.planeDetection = .horizontal
             
             arView.session.run(configuration)
+            
             
         }
         

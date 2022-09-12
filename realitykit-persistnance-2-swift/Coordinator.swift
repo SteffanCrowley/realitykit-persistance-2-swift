@@ -46,6 +46,7 @@ class Coordinator: NSObject, ARSessionDelegate {
         }
     }
     
+    
     func clearWorldMap() {
         
         guard let arView = arView else {

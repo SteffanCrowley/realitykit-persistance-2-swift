@@ -69,7 +69,6 @@ struct ARViewContainer: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         Coordinator(vm: vm)
     }
-    
 }
 
 #if DEBUG
